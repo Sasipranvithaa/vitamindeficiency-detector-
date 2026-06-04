@@ -16,4 +16,4 @@ An advanced computer-vision health informatics simulator that integrates client-
 
 ## 💻 Live Production Build
 Test the real-time neural network camera tracking setup directly via GitHub Pages:
-👉 **[https://Sasipranvithaa.github.io/vitamindeficiency-detector/](https://Sasipranvithaa.github.io/vitamindeficiency-detector/)**
+👉 **[https://Sasipranvithaa.github.io/vitamindeficiency-detector-/](https://Sasipranvithaa.github.io/vitamindeficiency-detector-/)**
