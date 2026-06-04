@@ -3,421 +3,168 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Biometric Vitamin Deficiency Diagnostic Matrix</title>
-    <script defer src="https://cdn.jsdelivr.net/npm/@vladmandic/face-api/dist/face-api.js"></script>
+    <title>Micronutrient Deficiency Diagnostic Matrix</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background-color: #f0f4f8;
-            color: #1e293b;
-            padding: 40px 20px;
-            display: flex;
-            justify-content: center;
-        }
-
-        .container {
-            background: #ffffff;
-            width: 100%;
-            max-width: 650px;
-            padding: 35px;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-        }
-
-        h2 {
-            color: #0f172a;
-            font-size: 1.6rem;
-            margin-bottom: 8px;
-            text-align: center;
-        }
-
-        .subtitle {
-            color: #64748b;
-            font-size: 0.9rem;
-            text-align: center;
-            margin-bottom: 25px;
-        }
-
-        .disclaimer {
-            background: #fef2f2;
-            border-left: 4px solid #ef4444;
-            color: #991b1b;
-            padding: 12px;
-            font-size: 0.8rem;
-            border-radius: 6px;
-            margin-bottom: 25px;
-            line-height: 1.4;
-        }
-
-        .section-box {
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            padding: 18px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-        }
-
-        .section-title {
-            font-size: 0.9rem;
-            font-weight: 700;
-            color: #334155;
-            margin-bottom: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        /* Biometric Webcam Arena */
-        .camera-container {
-            position: relative;
-            width: 100%;
-            max-width: 400px;
-            height: 300px;
-            margin: 0 auto 15px auto;
-            background: #0f172a;
-            border-radius: 12px;
-            overflow: hidden;
-            border: 3px solid #3b82f6;
-        }
-
-        #webcam {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        #overlayCanvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-        }
-
-        .status-text {
-            text-align: center;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: #2563eb;
-            margin-bottom: 15px;
-            padding: 0 10px;
-        }
-
-        .profile-selector {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 10px;
-        }
-
-        .profile-option {
-            position: relative;
-        }
-
-        .profile-option input {
-            position: absolute;
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .profile-label {
-            display: block;
-            text-align: center;
-            background: #fff;
-            border: 1px solid #cbd5e1;
-            padding: 10px;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .profile-option input:checked + .profile-label {
-            background: #2563eb;
-            color: #fff;
-            border-color: #2563eb;
-        }
-
-        .symptom-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-
-        .symptom-card {
-            background: #fff;
-            border: 1px solid #cbd5e1;
-            padding: 12px 15px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .symptom-card input { width: 16px; height: 16px; }
-        .symptom-card label { font-size: 0.85rem; font-weight: 500; width: 100%; }
-
-        button {
-            width: 100%;
-            padding: 14px;
-            background: #10b981;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 700;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        button:hover { background: #059669; }
-
-        .results-box {
-            display: none;
-            margin-top: 30px;
-            border-top: 2px dashed #e2e8f0;
-            padding-top: 25px;
-        }
-
-        .analysis-card {
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 15px;
-        }
-
-        .analysis-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .vitamin-tag { font-size: 1.1rem; font-weight: 700; color: #1e3a8a; }
-        .confidence-badge { background: #dbeafe; color: #1e40af; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; }
-        .description-text { font-size: 0.9rem; color: #475569; line-height: 1.5; margin-bottom: 12px; }
-        .food-sources { background: #fff; border: 1px solid #cbd5e1; padding: 12px; border-radius: 8px; font-size: 0.85rem; border-left: 4px solid #10b981; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: #f0f4f8; color: #1e293b; padding: 20px 10px; display: flex; justify-content: center; }
+        .container { background: #ffffff; width: 100%; max-width: 650px; padding: 25px 15px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        h2 { color: #0f172a; font-size: 1.4rem; margin-bottom: 8px; text-align: center; line-height: 1.3; }
+        .subtitle { color: #64748b; font-size: 0.85rem; text-align: center; margin-bottom: 20px; }
+        .disclaimer { background: #fef2f2; border-left: 4px solid #ef4444; color: #991b1b; padding: 12px; font-size: 0.78rem; border-radius: 6px; margin-bottom: 20px; line-height: 1.4; }
+        .section-box { background: #f8fafc; border: 1px solid #e2e8f0; padding: 15px; border-radius: 12px; margin-bottom: 20px; }
+        .section-title { font-size: 0.85rem; font-weight: 700; color: #334155; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .grid-3-col { display: grid; grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); gap: 8px; }
+        .profile-option { position: relative; display: flex; }
+        .profile-option input { position: absolute; opacity: 0; width: 0; height: 0; }
+        .profile-label { display: flex; align-items: center; justify-content: center; text-align: center; background: #fff; border: 1px solid #cbd5e1; padding: 10px 4px; border-radius: 8px; font-size: 0.8rem; font-weight: 600; cursor: pointer; width: 100%; min-height: 48px; word-wrap: break-word; overflow-wrap: break-word; line-height: 1.2; color: #1e293b; }
+        .profile-option input:checked + .profile-label { background: #2563eb; color: #ffffff; border-color: #2563eb; }
+        .symptom-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; }
+        .symptom-card { background: #fff; border: 1px solid #cbd5e1; padding: 10px 12px; border-radius: 10px; display: flex; align-items: center; gap: 8px; min-height: 56px; }
+        .symptom-card input { width: 18px; height: 18px; cursor: pointer; flex-shrink: 0; }
+        .symptom-card label { font-size: 0.78rem; font-weight: 500; width: 100%; cursor: pointer; line-height: 1.3; word-wrap: break-word; }
+        .btn-group { display: grid; grid-template-columns: 2fr 1fr; gap: 10px; }
+        button { padding: 14px; border: none; border-radius: 8px; font-size: 0.9rem; font-weight: 700; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; }
+        .btn-primary { background: #10b981; color: white; }
+        .btn-secondary { background: #e2e8f0; color: #475569; }
+        .results-box { display: none; margin-top: 30px; border-top: 2px dashed #e2e8f0; padding-top: 25px; }
+        .analysis-card { background: #f8fafc; border: 1px solid #e2e8f0; padding: 15px; border-radius: 12px; margin-bottom: 15px; }
+        .analysis-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+        .vitamin-tag { font-size: 0.95rem; font-weight: 700; color: #1e3a8a; }
+        .progress-container { background: #e2e8f0; border-radius: 10px; height: 8px; width: 100%; margin-bottom: 12px; overflow: hidden; }
+        .progress-bar { height: 100%; border-radius: 10px; }
+        .description-text { font-size: 0.85rem; color: #475569; line-height: 1.4; margin-bottom: 12px; }
+        .food-sources { background: #fff; border: 1px solid #cbd5e1; padding: 10px; border-radius: 8px; font-size: 0.8rem; border-left: 4px solid #10b981; margin-bottom: 10px; line-height: 1.4; }
         .food-sources strong { color: #065f46; }
-        .dietary-tag { display: inline-block; font-size: 0.7rem; text-transform: uppercase; background: #ecfdf5; color: #047857; padding: 2px 6px; border-radius: 4px; font-weight: 700; margin-bottom: 5px; }
+        .medication-sources { background: #fff; border: 1px solid #cbd5e1; padding: 10px; border-radius: 8px; font-size: 0.8rem; border-left: 4px solid #cc6600; margin-bottom: 12px; line-height: 1.4; }
+        .medication-sources strong { color: #994d00; }
+        .context-banner { padding: 10px 12px; border-radius: 6px; font-size: 0.78rem; font-weight: 600; line-height: 1.4; }
+        .banner-info { background: #eff6ff; color: #1e40af; border-left: 3px solid #3b82f6; }
+        .banner-warning { background: #fffbeb; color: #92400e; border-left: 3px solid #f59e0b; }
+        .banner-danger { background: #fef2f2; color: #991b1b; border-left: 3px solid #ef4444; }
+        .tag-group { margin-bottom: 8px; }
+        .dietary-tag { display: inline-block; font-size: 0.65rem; text-transform: uppercase; background: #ecfdf5; color: #047857; padding: 2px 6px; border-radius: 4px; font-weight: 700; margin-right: 5px; }
+        .stat-tag { display: inline-block; font-size: 0.65rem; text-transform: uppercase; background: #f1f5f9; color: #475569; padding: 2px 6px; border-radius: 4px; font-weight: 700; }
     </style>
 </head>
 <body>
-
     <div class="container">
-        <h2>Biometric Deficiency Diagnostic Matrix</h2>
-        <div class="subtitle">Computer Vision Facial Mapping & Micronutrient Allocation Engine</div>
-
-        <div class="disclaimer">
-            <strong>⚠️ Medical Disclaimer:</strong> This application is an advanced structural logic simulation for portfolio presentation. It does not provide factual clinical medical protocols.
-        </div>
-
+        <h2>Micronutrient Deficiency Diagnostic Matrix</h2>
+        <div class="subtitle">Conditional Logic Nutritional Allocation Engine</div>
+        <div class="disclaimer"><strong>⚠️ Medical Disclaimer:</strong> Portfolio structural simulation. Does not provide clinical protocols.</div>
         <div class="section-box">
-            <div class="section-title">📷 Biometric Scan Vector (Face-API.js Pipeline)</div>
-            <div class="camera-container">
-                <video id="webcam" autoplay muted playsinline></video>
-                <canvas id="overlayCanvas"></canvas>
-            </div>
-            <div id="scanStatus" class="status-text">⏳ Downloading Neural Network Models (Please wait)...</div>
-        </div>
-
-        <div class="section-box">
-            <div class="section-title">🥦 Step 1: Establish Dietary Vector Profile</div>
-            <div class="profile-selector">
-                <div class="profile-option">
-                    <input type="radio" id="dietStandard" name="dietProfile" value="standard" checked>
-                    <label for="dietStandard" class="profile-label">Standard (Omnivore)</label>
-                </div>
-                <div class="profile-option">
-                    <input type="radio" id="dietVegetarian" name="dietProfile" value="vegetarian">
-                    <label for="dietVegetarian" class="profile-label">Vegetarian</label>
-                </div>
-                <div class="profile-option">
-                    <input type="radio" id="dietVegan" name="dietProfile" value="vegan">
-                    <label for="dietVegan" class="profile-label">Strict Vegan</label>
-                </div>
+            <div class="section-title">🥦 Step 1: Establish Dietary Profile</div>
+            <div class="profile-selector grid-3-col">
+                <div class="profile-option"><input type="radio" id="dietStandard" name="dietProfile" value="standard" checked><label for="dietStandard" class="profile-label">Standard</label></div>
+                <div class="profile-option"><input type="radio" id="dietVegetarian" name="dietProfile" value="vegetarian"><label for="dietVegetarian" class="profile-label">Vegetarian</label></div>
+                <div class="profile-option"><input type="radio" id="dietVegan" name="dietProfile" value="vegan"><label for="dietVegan" class="profile-label">Strict Vegan</label></div>
             </div>
         </div>
-
         <div class="section-box">
-            <div class="section-title">🛡️ Step 2: Secondary Validation Symptoms</div>
+            <div class="section-title">🛡️ Step 2: Observed Indicators</div>
             <div class="symptom-grid">
-                <div class="symptom-card"><input type="checkbox" id="gums" value="gums"><label for="gums">Bleeding Gums / Loose Teeth</label></div>
-                <div class="symptom-card"><input type="checkbox" id="nails" value="nails"><label for="nails">Brittle Nails / Thinning Hair</label></div>
-                <div class="symptom-card"><input type="checkbox" id="bones" value="bones"><label for="bones">Bone Density Concerns / Aches</label></div>
-                <div class="symptom-card"><input type="checkbox" id="tingling" value="tingling"><label for="tingling">Numbness / Peripheral Tingling</label></div>
+                <div class="symptom-card"><input type="checkbox" class="symptom-check" value="fatigue" id="f1"><label for="f1">Chronic Fatigue / Low Energy</label></div>
+                <div class="symptom-card"><input type="checkbox" class="symptom-check" value="gums" id="f2"><label for="f2">Bleeding Gums / Loose Teeth</label></div>
+                <div class="symptom-card"><input type="checkbox" class="symptom-check" value="nails" id="f3"><label for="f3">Brittle Nails / Thinning Hair</label></div>
+                <div class="symptom-card"><input type="checkbox" class="symptom-check" value="bones" id="f4"><label for="f4">Bone Aches / Muscle Weakness</label></div>
+                <div class="symptom-card"><input type="checkbox" class="symptom-check" value="tingling" id="f5"><label for="f5">Numbness / Tingling Sensations</label></div>
+                <div class="symptom-card"><input type="checkbox" class="symptom-check" value="vision" id="f6"><label for="f6">Poor Night Vision / Dry Eyes</label></div>
             </div>
         </div>
-
-        <button onclick="executeDiagnostic()">Execute Biometric Diagnostics</button>
-
+        <div class="section-box">
+            <div class="section-title">📊 Step 3: Demographics & Severity</div>
+            <div style="font-size: 0.78rem; font-weight: 600; color: #475569; margin-bottom: 6px;">Target Age Cohort</div>
+            <div class="profile-selector grid-3-col" style="margin-bottom: 15px;">
+                <div class="profile-option"><input type="radio" id="ageChild" name="ageCohort" value="child"><label for="ageChild" class="profile-label">Child (0-14)</label></div>
+                <div class="profile-option"><input type="radio" id="ageAdult" name="ageCohort" value="adult" checked><label for="ageAdult" class="profile-label">Adult (15-64)</label></div>
+                <div class="profile-option"><input type="radio" id="ageSenior" name="ageCohort" value="senior"><label for="ageSenior" class="profile-label">Senior (65+)</label></div>
+            </div>
+            <div style="font-size: 0.78rem; font-weight: 600; color: #475569; margin-bottom: 6px;">Severity Rating</div>
+            <div class="profile-selector grid-3-col">
+                <div class="profile-option"><input type="radio" id="sevNormal" name="severityRating" value="normal" checked><label for="sevNormal" class="profile-label">Normal / Mild</label></div>
+                <div class="profile-option"><input type="radio" id="sevRare" name="severityRating" value="rare"><label for="sevRare" class="profile-label">Rare / Sporadic</label></div>
+                <div class="profile-option"><input type="radio" id="sevAcute" name="severityRating" value="acute"><label for="sevAcute" class="profile-label">Acute / Severe</label></div>
+            </div>
+        </div>
+        <div class="btn-group">
+            <button class="btn-primary" onclick="executeDiagnostic()">Analyze Profile</button>
+            <button class="btn-secondary" onclick="resetForm()">Reset Matrix</button>
+        </div>
         <div id="resultsBox" class="results-box">
-            <div class="section-title">📊 Generated Clinical Hypotheses</div>
+            <div class="section-title">📊 Analysis Results</div>
             <div id="resultsContainer"></div>
         </div>
     </div>
-
     <script>
-        const video = document.getElementById('webcam');
-        const canvas = document.getElementById('overlayCanvas');
-        const statusText = document.getElementById('scanStatus');
-        let modelsLoaded = false;
-        let biometricSymptoms = [];
-
-        // Core Knowledge Base Matrix
         const deficiencyKnowledgeBase = [
-            {
-                vitamin: "Vitamin D (Calciferol)",
-                symptoms: ["fatigue", "bones"],
-                description: "Crucial for bone mineralization and optimal immune function. Deficiencies frequently manifest as long-term fatigue or physical bone soreness.",
-                dietarySuggestions: {
-                    standard: "Fatty fish (salmon, mackerel), fortified milk, egg yolks, and direct sunlight.",
-                    vegetarian: "Fortified dairy, UV-exposed mushrooms, and direct sunlight exposure.",
-                    vegan: "Fortified plant-based milks, UV-treated mushrooms, and structured D3 supplementation."
-                }
-            },
-            {
-                vitamin: "Vitamin A (Retinol)",
-                symptoms: ["fatigue", "vision"],
-                description: "Sustains rhodopsin production needed for structural low-light vision and cellular integrity.",
-                dietarySuggestions: {
-                    standard: "Beef liver, cod liver oil, organic egg yolks, and sweet potatoes.",
-                    vegetarian: "Sweet potatoes, raw carrots, boiled spinach, and grass-fed butter.",
-                    vegan: "Sweet potatoes, carrots, organic leafy spinach, and plant-based beta-carotene sources."
-                }
-            },
-            {
-                vitamin: "Vitamin B12 (Cobalamin)",
-                symptoms: ["tingling", "fatigue"],
-                description: "Essential for neurological mapping and nerve track insulation paths.",
-                dietarySuggestions: {
-                    standard: "Lean meats, shellfish, organic eggs, and fortified dairy.",
-                    vegetarian: "Greek yogurt, cottage cheese (paneer), and fortified grains.",
-                    vegan: "Nutritional yeast, fortified plant milks, and oral Methylcobalamin supplementation."
-                }
-            },
-            {
-                vitamin: "Vitamin C (Ascorbic Acid)",
-                symptoms: ["gums", "fatigue"],
-                description: "Vital for iron absorption and capillary integrity. Shortages cause structural tissue vulnerability.",
-                dietarySuggestions: {
-                    standard: "Citrus fruits, fresh amla, red bell peppers, and raw broccoli.",
-                    vegetarian: "Citrus fruits, fresh amla, red bell peppers, and raw broccoli.",
-                    vegan: "Fresh citrus, amla extract, raw bell peppers, and leafy broccoli structures."
-                }
-            }
+            { vitamin: "Vitamin D (Calciferol)", symptoms: ["fatigue", "bones"], commonIn: ["child", "senior"], description: "Crucial for bone mineralization.", dietarySuggestions: { standard: "Fatty fish, fortified milk.", vegetarian: "Fortified dairy, UV mushrooms.", vegan: "Fortified plant milks." }, clinicalCare: "Standard daily OTC Vitamin D3." },
+            { vitamin: "Vitamin A (Retinol)", symptoms: ["fatigue", "vision"], commonIn: ["child"], description: "Sustains low-light vision structural paths.", dietarySuggestions: { standard: "Beef liver, eggs.", vegetarian: "Sweet potatoes, carrots.", vegan: "Carrots, dark leafy greens." }, clinicalCare: "OTC Retinyl Palmitate support." },
+            { vitamin: "Vitamin B12 (Cobalamin)", symptoms: ["tingling", "fatigue"], commonIn: ["senior"], description: "Essential for nerve insulation.", dietarySuggestions: { standard: "Lean meats, seafood.", vegetarian: "Greek yogurt, cheese.", vegan: "Nutritional yeast, B12 supplements." }, clinicalCare: "Sublingual Methylcobalamin." },
+            { vitamin: "Vitamin C (Ascorbic Acid)", symptoms: ["gums", "fatigue"], commonIn: [], description: "Vital for tissue collagen synthesis.", dietarySuggestions: { standard: "Citrus, peppers.", vegetarian: "Citrus, broccoli.", vegan: "Fresh citrus, amla extract." }, clinicalCare: "Oral Ascorbic acid tablets." },
+            { vitamin: "Iron (Ferritin)", symptoms: ["fatigue", "nails"], commonIn: ["child"], description: "Key component of hemoglobin oxygen transport.", dietarySuggestions: { standard: "Red meat, lentils.", vegetarian: "Lentils, spinach.", vegan: "Kidney beans, dark greens." }, clinicalCare: "Oral Ferrous Sulfate syrups." }
         ];
 
-        // Pipeline Initialization: Load computer vision model files from stable server alternative
-        window.onload = async () => {
-            try {
-                const MODEL_URL = 'https://justadudewhohacks.github.io/face-api.js/weights/';
-                await faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL);
-                await faceapi.nets.faceExpressionNavigator.loadFromUri(MODEL_URL);
-                modelsLoaded = true;
-                statusText.style.color = "#10b981";
-                statusText.innerText = "✅ Neural Network Loaded. Initializing Camera Stream...";
-                startVideo();
-            } catch (err) {
-                statusText.style.color = "#ef4444";
-                statusText.innerText = "❌ Model Loading Error. Check camera permission or tracker pipeline.";
-                console.error(err);
-            }
-        };
-
-        function startVideo() {
-            navigator.mediaDevices.getUserMedia({ video: {} })
-                .then(stream => {
-                    video.srcObject = stream;
-                    statusText.style.color = "#2563eb";
-                    statusText.innerText = "📷 Camera Tracking Active... Align your face inside the frame.";
-                    trackBiometrics();
-                })
-                .catch(err => {
-                    statusText.style.color = "#ef4444";
-                    statusText.innerText = "❌ Camera Access Terminated. Please allow browser webcam access.";
-                });
-        }
-
-        // Computer Vision Face Tracker Engine Loop
-        async function trackBiometrics() {
-            if (!modelsLoaded) return;
-            
-            setInterval(async () => {
-                const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
-                    .withFaceExpressions();
-                
-                if (detections && detections.length > 0) {
-                    const expressions = detections[0].expressions;
-                    // Log dynamic fatigue variables based on tracking thresholds
-                    if (expressions.sad > 0.3 || expressions.neutral < 0.4) {
-                        if (!biometricSymptoms.includes("fatigue")) biometricSymptoms.push("fatigue");
-                        statusText.style.color = "#10b981";
-                        statusText.innerText = "🎯 Biometric Lock Secured. Status Vector: [Fatigue/Strain Detected]";
-                    }
-                } else {
-                    statusText.style.color = "#2563eb";
-                    statusText.innerText = "⚠️ Scanning... Keep your face clear inside the camera box.";
-                }
-            }, 1000);
-        }
-
         function executeDiagnostic() {
-            const selectedProfile = document.querySelector('input[name="dietProfile"]:checked').value;
-            const checkedBoxes = document.querySelectorAll('.symptom-grid input[type="checkbox"]:checked');
+            let selectedProfile = "standard";
+            let profiles = document.getElementsByName("dietProfile");
+            for(let i=0; i<profiles.length; i++) { if(profiles[i].checked) { selectedProfile = profiles[i].value; break; } }
+            let selectedAge = "adult";
+            let ages = document.getElementsByName("ageCohort");
+            for(let i=0; i<ages.length; i++) { if(ages[i].checked) { selectedAge = ages[i].value; break; } }
+            let selectedSeverity = "normal";
+            let severities = document.getElementsByName("severityRating");
+            for(let i=0; i<severities.length; i++) { if(severities[i].checked) { selectedSeverity = severities[i].value; break; } }
+            let totalSymptoms = [];
+            let checkBoxes = document.getElementsByClassName("symptom-check");
+            for(let i=0; i<checkBoxes.length; i++) { if(checkBoxes[i].checked) { totalSymptoms.push(checkBoxes[i].value); } }
             
-            // Merge manual checkbox arrays with automated biometric data lists
-            let totalSymptoms = Array.from(checkedBoxes).map(cb => cb.value);
-            biometricSymptoms.forEach(s => {
-                if(!totalSymptoms.includes(s)) totalSymptoms.push(s);
-            });
-
+            if (totalSymptoms.length === 0) { alert("Please select at least one symptom."); return; }
             const resultsBox = document.getElementById('resultsBox');
             const container = document.getElementById('resultsContainer');
-            
-            if (totalSymptoms.length === 0) {
-                alert("Halt: No indicators detected via camera tracking or secondary symptom form selects.");
-                return;
-            }
-
             container.innerHTML = '';
-            let validHypothesesGenerated = false;
+            let validMatches = false;
 
-            deficiencyKnowledgeBase.forEach(item => {
-                let matchedSymptoms = item.symptoms.filter(s => totalSymptoms.includes(s));
+            for (let i = 0; i < deficiencyKnowledgeBase.length; i++) {
+                let item = deficiencyKnowledgeBase[i];
+                let matchedSymptoms = [];
+                for(let j=0; j<item.symptoms.length; j++) { if(totalSymptoms.indexOf(item.symptoms[j]) !== -1) { matchedSymptoms.push(item.symptoms[j]); } }
                 
                 if (matchedSymptoms.length > 0) {
-                    validHypothesesGenerated = true;
+                    validMatches = true;
                     let confidenceScore = Math.round((matchedSymptoms.length / item.symptoms.length) * 100);
                     let targetedFoodAdvice = item.dietarySuggestions[selectedProfile];
+                    let barColor = confidenceScore === 100 ? '#10b981' : '#2563eb';
+                    let bannerHTML = '';
+                    if (selectedSeverity === 'acute') { bannerHTML = '<div class="context-banner banner-danger">🚨 <strong>CRITICAL SEVERITY:</strong> Food isn\'t enough. Consult a doctor immediately.</div>'; }
+                    else if (selectedSeverity === 'rare') { bannerHTML = '<div class="context-banner banner-info">🔍 <strong>NOTE:</strong> Symptoms are sporadic. Focus on general nutritional food logging balances.</div>'; }
+                    else if (selectedAge === 'child') { bannerHTML = '<div class="context-banner banner-warning">👶 <strong>NOTE:</strong> Pediatric paths require professional guidance.</div>'; }
+                    else if (item.commonIn.indexOf(selectedAge) !== -1) { bannerHTML = '<div class="context-banner banner-info">💡 <strong>INSIGHT:</strong> Common risk in your demographic group.</div>'; }
 
                     const card = document.createElement('div');
-                    card.classList.add('analysis-card');
+                    card.className = 'analysis-card';
                     card.innerHTML = `
-                        <div class="analysis-header">
-                            <span class="vitamin-tag">${item.vitamin}</span>
-                            <span class="confidence-badge">Biometric Match Index: ${confidenceScore}%</span>
-                        </div>
-                        <div class="dietary-tag">Active Filter: ${selectedProfile} Optimization</div>
+                        <div class="analysis-header"><span class="vitamin-tag">${item.vitamin}</span><span style="font-size:0.8rem; color:#475569;">${confidenceScore}% Match</span></div>
+                        <div class="tag-group"><div class="dietary-tag">${selectedProfile}</div><div class="stat-tag">Severity: ${selectedSeverity}</div></div>
+                        <div class="progress-container"><div class="progress-bar" style="width: ${confidenceScore}%; background-color: ${barColor};"></div></div>
                         <p class="description-text">${item.description}</p>
-                        <div class="food-sources">
-                            <strong>🥗 Recommended Food Architecture:</strong> ${targetedFoodAdvice}
-                        </div>
+                        <div class="food-sources"><strong>🥗 Recommended Foods:</strong> ${targetedFoodAdvice}</div>
+                        <div class="medication-sources"><strong>💊 Supplementary Data:</strong> ${item.clinicalCare}</div>
+                        ${bannerHTML}
                     `;
                     container.appendChild(card);
                 }
-            });
+            }
+            if(validMatches) { resultsBox.style.display = 'block'; resultsBox.scrollIntoView({ behavior: 'smooth' }); }
+            else { resultsBox.style.display = 'none'; alert("No matching values found."); }
+        }
 
-            resultsBox.style.display = validHypothesesGenerated ? 'block' : 'none';
-            if (validHypothesesGenerated) resultsBox.scrollIntoView({ behavior: 'smooth' });
+        function resetForm() {
+            let checkBoxes = document.getElementsByClassName("symptom-check");
+            for(let i=0; i<checkBoxes.length; i++) { checkBoxes[i].checked = false; }
+            document.getElementById('dietStandard').checked = true;
+            document.getElementById('ageAdult').checked = true;
+            document.getElementById('sevNormal').checked = true;
+            document.getElementById('resultsBox').style.display = 'none';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     </script>
 </body>
