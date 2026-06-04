@@ -106,12 +106,17 @@
             font-weight: 600;
             color: #2563eb;
             margin-bottom: 15px;
+            padding: 0 10px;
         }
 
         .profile-selector {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
             gap: 10px;
+        }
+
+        .profile-option {
+            position: relative;
         }
 
         .profile-option input {
@@ -243,7 +248,7 @@
         </div>
 
         <div class="section-box">
-            <div class="section-title">🛡️ Step 3: Secondary Validation Symptoms</div>
+            <div class="section-title">🛡️ Step 2: Secondary Validation Symptoms</div>
             <div class="symptom-grid">
                 <div class="symptom-card"><input type="checkbox" id="gums" value="gums"><label for="gums">Bleeding Gums / Loose Teeth</label></div>
                 <div class="symptom-card"><input type="checkbox" id="nails" value="nails"><label for="nails">Brittle Nails / Thinning Hair</label></div>
@@ -311,17 +316,19 @@
             }
         ];
 
-        // Pipeline Initialization: Load computer vision dependencies
+        // Pipeline Initialization: Load computer vision model files from stable server alternative
         window.onload = async () => {
             try {
-                const MODEL_URL = 'https://cdn.jsdelivr.net/npm/@vladmandic/face-api/model/';
+                const MODEL_URL = 'https://justadudewhohacks.github.io/face-api.js/weights/';
                 await faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL);
                 await faceapi.nets.faceExpressionNavigator.loadFromUri(MODEL_URL);
                 modelsLoaded = true;
-                statusText.innerText = "✅ Models Live. Initializing Camera Stream...";
+                statusText.style.color = "#10b981";
+                statusText.innerText = "✅ Neural Network Loaded. Initializing Camera Stream...";
                 startVideo();
             } catch (err) {
-                statusText.innerText = "❌ Model Loading Error. Check internet connection pipeline.";
+                statusText.style.color = "#ef4444";
+                statusText.innerText = "❌ Model Loading Error. Check camera permission or tracker pipeline.";
                 console.error(err);
             }
         };
@@ -330,15 +337,17 @@
             navigator.mediaDevices.getUserMedia({ video: {} })
                 .then(stream => {
                     video.srcObject = stream;
-                    statusText.innerText = "📷 Tracking Face... Keep expression neutral/clear.";
+                    statusText.style.color = "#2563eb";
+                    statusText.innerText = "📷 Camera Tracking Active... Align your face inside the frame.";
                     trackBiometrics();
                 })
                 .catch(err => {
-                    statusText.innerText = "❌ Camera Access Terminated by Permissions.";
+                    statusText.style.color = "#ef4444";
+                    statusText.innerText = "❌ Camera Access Terminated. Please allow browser webcam access.";
                 });
         }
 
-        // Computer Vision Real-Time Face Tracker Loop
+        // Computer Vision Face Tracker Engine Loop
         async function trackBiometrics() {
             if (!modelsLoaded) return;
             
@@ -347,25 +356,25 @@
                     .withFaceExpressions();
                 
                 if (detections && detections.length > 0) {
-                    statusText.innerText = "🎯 Biometric Lock Secured. Analyzing facial expressions...";
-                    
                     const expressions = detections[0].expressions;
-                    // Map high indices of 'sad' or 'fearful' structures as logical biometric fatigue flags
-                    if (expressions.sad > 0.4 || expressions.neutral < 0.3) {
+                    // Log dynamic fatigue variables based on tracking thresholds
+                    if (expressions.sad > 0.3 || expressions.neutral < 0.4) {
                         if (!biometricSymptoms.includes("fatigue")) biometricSymptoms.push("fatigue");
-                        statusText.innerText = "🎯 Lock Secured. Detected Status Vector: [Chronic Fatigue / Exhaustion Markers Present]";
+                        statusText.style.color = "#10b981";
+                        statusText.innerText = "🎯 Biometric Lock Secured. Status Vector: [Fatigue/Strain Detected]";
                     }
                 } else {
-                    statusText.innerText = "⚠️ Scanning... Align face inside webcam frame.";
+                    statusText.style.color = "#2563eb";
+                    statusText.innerText = "⚠️ Scanning... Keep your face clear inside the camera box.";
                 }
-            }, 1500);
+            }, 1000);
         }
 
         function executeDiagnostic() {
             const selectedProfile = document.querySelector('input[name="dietProfile"]:checked').value;
             const checkedBoxes = document.querySelectorAll('.symptom-grid input[type="checkbox"]:checked');
             
-            // Merge manual symptom checks with computer-vision biometric symptoms
+            // Merge manual checkbox arrays with automated biometric data lists
             let totalSymptoms = Array.from(checkedBoxes).map(cb => cb.value);
             biometricSymptoms.forEach(s => {
                 if(!totalSymptoms.includes(s)) totalSymptoms.push(s);
@@ -375,7 +384,7 @@
             const container = document.getElementById('resultsContainer');
             
             if (totalSymptoms.length === 0) {
-                alert("Halt: No symptoms verified via neural network scan or manual form data input.");
+                alert("Halt: No indicators detected via camera tracking or secondary symptom form selects.");
                 return;
             }
 
