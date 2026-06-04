@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biometric Vitamin Deficiency Diagnostic Matrix</title>
+    <script defer src="https://cdn.jsdelivr.net/npm/@vladmandic/face-api/dist/face-api.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f0f4f8;
+            color: #1e293b;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            background: #ffffff;
+            width: 100%;
+            max-width: 650px;
+            padding: 35px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        h2 {
+            color: #0f172a;
+            font-size: 1.6rem;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .subtitle {
+            color: #64748b;
+            font-size: 0.9rem;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .disclaimer {
+            background: #fef2f2;
+            border-left: 4px solid #ef4444;
+            color: #991b1b;
+            padding: 12px;
+            font-size: 0.8rem;
+            border-radius: 6px;
+            margin-bottom: 25px;
+            line-height: 1.4;
+        }
+
+        .section-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 18px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #334155;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Biometric Webcam Arena */
+        .camera-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            height: 300px;
+            margin: 0 auto 15px auto;
+            background: #0f172a;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 3px solid #3b82f6;
+        }
+
+        #webcam {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        #overlayCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .status-text {
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #2563eb;
+            margin-bottom: 15px;
+        }
+
+        .profile-selector {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+        }
+
+        .profile-option input {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .profile-label {
+            display: block;
+            text-align: center;
+            background: #fff;
+            border: 1px solid #cbd5e1;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .profile-option input:checked + .profile-label {
+            background: #2563eb;
+            color: #fff;
+            border-color: #2563eb;
+        }
+
+        .symptom-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .symptom-card {
+            background: #fff;
+            border: 1px solid #cbd5e1;
+            padding: 12px 15px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .symptom-card input { width: 16px; height: 16px; }
+        .symptom-card label { font-size: 0.85rem; font-weight: 500; width: 100%; }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background: #10b981;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        button:hover { background: #059669; }
+
+        .results-box {
+            display: none;
+            margin-top: 30px;
+            border-top: 2px dashed #e2e8f0;
+            padding-top: 25px;
+        }
+
+        .analysis-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+        }
+
+        .analysis-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .vitamin-tag { font-size: 1.1rem; font-weight: 700; color: #1e3a8a; }
+        .confidence-badge { background: #dbeafe; color: #1e40af; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; }
+        .description-text { font-size: 0.9rem; color: #475569; line-height: 1.5; margin-bottom: 12px; }
+        .food-sources { background: #fff; border: 1px solid #cbd5e1; padding: 12px; border-radius: 8px; font-size: 0.85rem; border-left: 4px solid #10b981; }
+        .food-sources strong { color: #065f46; }
+        .dietary-tag { display: inline-block; font-size: 0.7rem; text-transform: uppercase; background: #ecfdf5; color: #047857; padding: 2px 6px; border-radius: 4px; font-weight: 700; margin-bottom: 5px; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Biometric Deficiency Diagnostic Matrix</h2>
+        <div class="subtitle">Computer Vision Facial Mapping & Micronutrient Allocation Engine</div>
+
+        <div class="disclaimer">
+            <strong>⚠️ Medical Disclaimer:</strong> This application is an advanced structural logic simulation for portfolio presentation. It does not provide factual clinical medical protocols.
+        </div>
+
+        <div class="section-box">
+            <div class="section-title">📷 Biometric Scan Vector (Face-API.js Pipeline)</div>
+            <div class="camera-container">
+                <video id="webcam" autoplay muted playsinline></video>
+                <canvas id="overlayCanvas"></canvas>
+            </div>
+            <div id="scanStatus" class="status-text">⏳ Downloading Neural Network Models (Please wait)...</div>
+        </div>
+
+        <div class="section-box">
+            <div class="section-title">🥦 Step 1: Establish Dietary Vector Profile</div>
+            <div class="profile-selector">
+                <div class="profile-option">
+                    <input type="radio" id="dietStandard" name="dietProfile" value="standard" checked>
+                    <label for="dietStandard" class="profile-label">Standard (Omnivore)</label>
+                </div>
+                <div class="profile-option">
+                    <input type="radio" id="dietVegetarian" name="dietProfile" value="vegetarian">
+                    <label for="dietVegetarian" class="profile-label">Vegetarian</label>
+                </div>
+                <div class="profile-option">
+                    <input type="radio" id="dietVegan" name="dietProfile" value="vegan">
+                    <label for="dietVegan" class="profile-label">Strict Vegan</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-box">
+            <div class="section-title">🛡️ Step 3: Secondary Validation Symptoms</div>
+            <div class="symptom-grid">
+                <div class="symptom-card"><input type="checkbox" id="gums" value="gums"><label for="gums">Bleeding Gums / Loose Teeth</label></div>
+                <div class="symptom-card"><input type="checkbox" id="nails" value="nails"><label for="nails">Brittle Nails / Thinning Hair</label></div>
+                <div class="symptom-card"><input type="checkbox" id="bones" value="bones"><label for="bones">Bone Density Concerns / Aches</label></div>
+                <div class="symptom-card"><input type="checkbox" id="tingling" value="tingling"><label for="tingling">Numbness / Peripheral Tingling</label></div>
+            </div>
+        </div>
+
+        <button onclick="executeDiagnostic()">Execute Biometric Diagnostics</button>
+
+        <div id="resultsBox" class="results-box">
+            <div class="section-title">📊 Generated Clinical Hypotheses</div>
+            <div id="resultsContainer"></div>
+        </div>
+    </div>
+
+    <script>
+        const video = document.getElementById('webcam');
+        const canvas = document.getElementById('overlayCanvas');
+        const statusText = document.getElementById('scanStatus');
+        let modelsLoaded = false;
+        let biometricSymptoms = [];
+
+        // Core Knowledge Base Matrix
+        const deficiencyKnowledgeBase = [
+            {
+                vitamin: "Vitamin D (Calciferol)",
+                symptoms: ["fatigue", "bones"],
+                description: "Crucial for bone mineralization and optimal immune function. Deficiencies frequently manifest as long-term fatigue or physical bone soreness.",
+                dietarySuggestions: {
+                    standard: "Fatty fish (salmon, mackerel), fortified milk, egg yolks, and direct sunlight.",
+                    vegetarian: "Fortified dairy, UV-exposed mushrooms, and direct sunlight exposure.",
+                    vegan: "Fortified plant-based milks, UV-treated mushrooms, and structured D3 supplementation."
+                }
+            },
+            {
+                vitamin: "Vitamin A (Retinol)",
+                symptoms: ["fatigue", "vision"],
+                description: "Sustains rhodopsin production needed for structural low-light vision and cellular integrity.",
+                dietarySuggestions: {
+                    standard: "Beef liver, cod liver oil, organic egg yolks, and sweet potatoes.",
+                    vegetarian: "Sweet potatoes, raw carrots, boiled spinach, and grass-fed butter.",
+                    vegan: "Sweet potatoes, carrots, organic leafy spinach, and plant-based beta-carotene sources."
+                }
+            },
+            {
+                vitamin: "Vitamin B12 (Cobalamin)",
+                symptoms: ["tingling", "fatigue"],
+                description: "Essential for neurological mapping and nerve track insulation paths.",
+                dietarySuggestions: {
+                    standard: "Lean meats, shellfish, organic eggs, and fortified dairy.",
+                    vegetarian: "Greek yogurt, cottage cheese (paneer), and fortified grains.",
+                    vegan: "Nutritional yeast, fortified plant milks, and oral Methylcobalamin supplementation."
+                }
+            },
+            {
+                vitamin: "Vitamin C (Ascorbic Acid)",
+                symptoms: ["gums", "fatigue"],
+                description: "Vital for iron absorption and capillary integrity. Shortages cause structural tissue vulnerability.",
+                dietarySuggestions: {
+                    standard: "Citrus fruits, fresh amla, red bell peppers, and raw broccoli.",
+                    vegetarian: "Citrus fruits, fresh amla, red bell peppers, and raw broccoli.",
+                    vegan: "Fresh citrus, amla extract, raw bell peppers, and leafy broccoli structures."
+                }
+            }
+        ];
+
+        // Pipeline Initialization: Load computer vision dependencies
+        window.onload = async () => {
+            try {
+                const MODEL_URL = 'https://cdn.jsdelivr.net/npm/@vladmandic/face-api/model/';
+                await faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL);
+                await faceapi.nets.faceExpressionNavigator.loadFromUri(MODEL_URL);
+                modelsLoaded = true;
+                statusText.innerText = "✅ Models Live. Initializing Camera Stream...";
+                startVideo();
+            } catch (err) {
+                statusText.innerText = "❌ Model Loading Error. Check internet connection pipeline.";
+                console.error(err);
+            }
+        };
+
+        function startVideo() {
+            navigator.mediaDevices.getUserMedia({ video: {} })
+                .then(stream => {
+                    video.srcObject = stream;
+                    statusText.innerText = "📷 Tracking Face... Keep expression neutral/clear.";
+                    trackBiometrics();
+                })
+                .catch(err => {
+                    statusText.innerText = "❌ Camera Access Terminated by Permissions.";
+                });
+        }
+
+        // Computer Vision Real-Time Face Tracker Loop
+        async function trackBiometrics() {
+            if (!modelsLoaded) return;
+            
+            setInterval(async () => {
+                const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
+                    .withFaceExpressions();
+                
+                if (detections && detections.length > 0) {
+                    statusText.innerText = "🎯 Biometric Lock Secured. Analyzing facial expressions...";
+                    
+                    const expressions = detections[0].expressions;
+                    // Map high indices of 'sad' or 'fearful' structures as logical biometric fatigue flags
+                    if (expressions.sad > 0.4 || expressions.neutral < 0.3) {
+                        if (!biometricSymptoms.includes("fatigue")) biometricSymptoms.push("fatigue");
+                        statusText.innerText = "🎯 Lock Secured. Detected Status Vector: [Chronic Fatigue / Exhaustion Markers Present]";
+                    }
+                } else {
+                    statusText.innerText = "⚠️ Scanning... Align face inside webcam frame.";
+                }
+            }, 1500);
+        }
+
+        function executeDiagnostic() {
+            const selectedProfile = document.querySelector('input[name="dietProfile"]:checked').value;
+            const checkedBoxes = document.querySelectorAll('.symptom-grid input[type="checkbox"]:checked');
+            
+            // Merge manual symptom checks with computer-vision biometric symptoms
+            let totalSymptoms = Array.from(checkedBoxes).map(cb => cb.value);
+            biometricSymptoms.forEach(s => {
+                if(!totalSymptoms.includes(s)) totalSymptoms.push(s);
+            });
+
+            const resultsBox = document.getElementById('resultsBox');
+            const container = document.getElementById('resultsContainer');
+            
+            if (totalSymptoms.length === 0) {
+                alert("Halt: No symptoms verified via neural network scan or manual form data input.");
+                return;
+            }
+
+            container.innerHTML = '';
+            let validHypothesesGenerated = false;
+
+            deficiencyKnowledgeBase.forEach(item => {
+                let matchedSymptoms = item.symptoms.filter(s => totalSymptoms.includes(s));
+                
+                if (matchedSymptoms.length > 0) {
+                    validHypothesesGenerated = true;
+                    let confidenceScore = Math.round((matchedSymptoms.length / item.symptoms.length) * 100);
+                    let targetedFoodAdvice = item.dietarySuggestions[selectedProfile];
+
+                    const card = document.createElement('div');
+                    card.classList.add('analysis-card');
+                    card.innerHTML = `
+                        <div class="analysis-header">
+                            <span class="vitamin-tag">${item.vitamin}</span>
+                            <span class="confidence-badge">Biometric Match Index: ${confidenceScore}%</span>
+                        </div>
+                        <div class="dietary-tag">Active Filter: ${selectedProfile} Optimization</div>
+                        <p class="description-text">${item.description}</p>
+                        <div class="food-sources">
+                            <strong>🥗 Recommended Food Architecture:</strong> ${targetedFoodAdvice}
+                        </div>
+                    `;
+                    container.appendChild(card);
+                }
+            });
+
+            resultsBox.style.display = validHypothesesGenerated ? 'block' : 'none';
+            if (validHypothesesGenerated) resultsBox.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
